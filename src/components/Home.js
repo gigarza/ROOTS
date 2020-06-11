@@ -3,6 +3,7 @@ import { MDBBtn, MDBContainer, MDBModal, MDBModalBody, MDBModalHeader, MDBModalF
 import "../index.css";
 import FormPage from "./auditionRegister/FormPage.js"
 import BasicServer from "./BasicServer.js"
+import QueryList from "./QueryList.js"
 
 class Home extends Component {
 
@@ -40,6 +41,8 @@ class Home extends Component {
             </MDBModalFooter>
           </MDBModal>
         </MDBContainer>
+
+        <QueryList/>
       </div>
     );
   }

@@ -1,18 +1,22 @@
 import time
-from flask import Flask
+from flask import Flask, jsonify, request
+from flask_cors import CORS
 from flask_graphql import GraphQLView
 from flask_mongoengine import MongoEngine
 from schema import schema
 import json
+import logging
 
 config = json.loads(open("../config.json").read())
 uri = 'mongodb://'+config['mongo_user']+':'+config['mongo_pass']+'@'+config['mongo_host']
 
 app = Flask(__name__)
+app.config['WTF_CSRF_ENABLED'] = False
 app.config['MONGODB_SETTINGS'] = {
     'db': 'roots',
     'host': uri
 }
+cors = CORS(app)
 db = MongoEngine(app)
 
 default_query = '''
@@ -39,7 +43,8 @@ app.add_url_rule(
 # An endpoint to get the current time
 @app.route('/time')
 def get_current_time():
-    return {'time': time.time()}
+    data = {'time': time.time()}
+    return jsonify(data)
 
 if __name__ == '__main__':
     app.run()
