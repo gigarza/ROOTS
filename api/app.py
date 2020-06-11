@@ -20,7 +20,7 @@ cors = CORS(app)
 db = MongoEngine(app)
 
 default_query = '''
-{
+query {
   allAuditionee {
     edges {
       node {
@@ -35,16 +35,34 @@ default_query = '''
   }
 }'''.strip()
 
+default_mutation = '''
+mutation {
+  createAuditionee(
+    name: "Ashley Stone",
+    email: "example@gmail.com",
+    phone: "123-456-7890",
+    maxPieces: 2,
+    number: 2
+  ) {
+    name
+    email
+    phone
+    maxPieces
+    number
+  }
+}
+'''.strip()
+
 app.add_url_rule(
     '/graphql',
     view_func=GraphQLView.as_view('graphql', schema=schema, graphiql=True)
 )
 
-# An endpoint to get the current time
-@app.route('/time')
-def get_current_time():
-    data = {'time': time.time()}
-    return jsonify(data)
+# # An endpoint to get the current time
+# @app.route('/time')
+# def get_current_time():
+#     data = {'time': time.time()}
+#     return jsonify(data)
 
 if __name__ == '__main__':
     app.run()

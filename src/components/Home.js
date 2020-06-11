@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { MDBBtn, MDBContainer, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter } from "mdbreact";
+import { MDBBtn, MDBContainer, MDBModal, MDBModalBody, MDBModalHeader} from "mdbreact";
 import "../index.css";
 import FormPage from "./auditionRegister/FormPage.js"
-import BasicServer from "./BasicServer.js"
 import QueryList from "./QueryList.js"
 
 class Home extends Component {
@@ -24,7 +23,6 @@ class Home extends Component {
           <p>
             R O O T S
           </p>
-          <BasicServer/>
           <MDBBtn outline color="white" onClick={this.toggle}>Register</MDBBtn>
         </header>
 
@@ -34,11 +32,6 @@ class Home extends Component {
             <MDBModalBody>
               <FormPage />
             </MDBModalBody>
-            <MDBModalFooter>
-              <MDBBtn color="unique" type="submit">
-                Register
-              </MDBBtn>
-            </MDBModalFooter>
           </MDBModal>
         </MDBContainer>
 
