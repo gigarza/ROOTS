@@ -18,6 +18,7 @@ class CreateAuditionee(graphene.Mutation):
     name = graphene.String()
     email = graphene.String()
     phone = graphene.String()
+    productions = graphene.String()
     maxPieces = graphene.Int()
     number = graphene.Int()
 
@@ -25,11 +26,12 @@ class CreateAuditionee(graphene.Mutation):
         name = graphene.String()
         email = graphene.String()
         phone = graphene.String()
+        productions = graphene.String()
         maxPieces = graphene.Int()
         number = graphene.Int()
 
-    def mutate(self, info, name, email, phone, maxPieces, number):
-        auditionee = Auditionee(name=name, email=email, phone=phone, maxPieces=maxPieces, number=number)
+    def mutate(self, info, name, email, phone, productions, maxPieces, number):
+        auditionee = Auditionee(name=name, email=email, phone=phone, productions=productions, maxPieces=maxPieces, number=number)
         auditionee.save()
 
         return CreateAuditionee(
@@ -37,6 +39,7 @@ class CreateAuditionee(graphene.Mutation):
             name=auditionee.name,
             email=auditionee.email,
             phone=auditionee.phone,
+            productions=auditionee.productions,
             maxPieces=auditionee.maxPieces,
             number=auditionee.number
         )

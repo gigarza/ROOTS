@@ -6,5 +6,6 @@ class Auditionee(Document):
     name = StringField(required=True)
     email = StringField(required=True)
     phone = StringField(required=True)
+    productions = StringField(required=True)
     maxPieces = IntField(required=True)
     number = IntField(required=True)
