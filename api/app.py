@@ -8,7 +8,7 @@ import json
 import logging
 
 config = json.loads(open("../config.json").read())
-uri = 'mongodb+srv://'+config['mongo_user']+":"+config['mongo_pass']+'@'+config['mongo_host']+'?retryWrites=true&w=majority'
+uri = 'mongodb+srv://'+config['mongo_user']+':'+config['mongo_pass']+'@'+config['mongo_host']
 
 app = Flask(__name__)
 app.config['WTF_CSRF_ENABLED'] = False
