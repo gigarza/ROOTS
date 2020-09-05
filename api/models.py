@@ -9,3 +9,9 @@ class Auditionee(Document):
     productions = StringField(required=True)
     maxPieces = IntField(required=True)
     number = IntField(required=True)
+
+class Choreographer(Document):
+    meta = {'collection': 'choreographers'}
+    name = StringField(required=True)
+    email = StringField(required=True)
+    phone = StringField(required=True)

@@ -19,7 +19,7 @@ app.config['MONGODB_SETTINGS'] = {
 cors = CORS(app)
 db = MongoEngine(app)
 
-default_query = '''
+default_audition_query = '''
 query {
   allAuditionee {
     edges {
@@ -33,9 +33,10 @@ query {
       }
     }
   }
-}'''.strip()
+}
+'''.strip()
 
-default_mutation = '''
+default_audition_mutation = '''
 mutation {
   createAuditionee(
     name: "Ashley Stone",
@@ -49,6 +50,35 @@ mutation {
     phone
     maxPieces
     number
+  }
+}
+'''.strip()
+
+default_choreographer_query = '''
+query {
+  allChoreographer {
+    edges {
+      node {
+        id
+        name
+        email
+        phone
+      }
+    }
+  }
+}
+'''.strip()
+
+default_choreographer_mutation = '''
+mutation {
+  createChoreographer(
+    name: "Ashley Stone",
+    email: "example@gmail.com",
+    phone: "123-456-7890"
+  ) {
+    name
+    email
+    phone
   }
 }
 '''.strip()

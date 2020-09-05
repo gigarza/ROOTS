@@ -3,7 +3,32 @@ import { MDBBtn, MDBContainer, MDBModal, MDBModalBody, MDBModalHeader} from "mdb
 import "../index.css";
 import { Query, Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
-import BasicQuery from './BasicQuery'
+import BasicChoreographerQuery from './BasicChoreographerQuery'
+
+const CHOREOGRAPHER_REGISTER = gql`
+  mutation createChoreographer($name: String!, $email: String!, $phone: String!) {
+    createChoreographer(name: $name, email: $email, phone: $phone) {
+      name,
+      email,
+      phone
+    }
+  }
+`
+
+const ALL_CHOREOGRAPHER = gql`
+{
+  allChoreographer {
+    edges {
+      node {
+        id
+        name
+        email
+        phone
+      }
+    }
+  }
+}
+`
 
 class RegisterChoreographer extends Component {
 
@@ -44,7 +69,7 @@ class RegisterChoreographer extends Component {
                 <MDBModalHeader toggle={this.toggle}>Register A Choreographer</MDBModalHeader>
                 <MDBModalBody>
                     <MDBContainer>
-                        <form id="auditionee-form">
+                        <form id="choreographer-form">
                             <label className="grey-text">Name</label>
                             <input type="text"
                             className="form-control"
@@ -68,7 +93,20 @@ class RegisterChoreographer extends Component {
                             onChange={e => this.setState({ phone: e.target.value })}/>
                             
                             <div className="text-center mt-4">
-                            <MDBBtn color="unique" type="submit">Register</MDBBtn>
+                                <Mutation mutation={CHOREOGRAPHER_REGISTER} onCompleted={this.endChoreographerRegister}>
+                                    {(createChroeographer, { data }) =>
+                                    <MDBBtn color="unique" type="submit" onClick={(e) => {
+                                        e.preventDefault();
+                                        this.toggle()
+                                        createChroeographer({
+                                            variables: { name: name, email: email, phone: phone},
+                                            refetchQueries: [{ query: ALL_CHOREOGRAPHER}]
+                                        })
+                                        }}>
+                                        Register
+                                    </MDBBtn>
+                                            }
+                                </Mutation>
                             </div>
 
                         </form>
@@ -76,6 +114,21 @@ class RegisterChoreographer extends Component {
                 </MDBModalBody>
                 </MDBModal>
                 </MDBContainer>
+
+                <Query query={ALL_CHOREOGRAPHER}>
+                    {({ loading, error, data }) => {
+                        if (loading) return <div>Fetching</div>
+                        if (error) return <div>Error</div>
+                        
+                        const choreographersToRender = data.allChoreographer.edges
+                        
+                        return (
+                            <div>
+                                {choreographersToRender.map(choreographer => <BasicChoreographerQuery key={choreographer.node.id} choreographer={choreographer.node} />)}
+                            </div>
+                        )
+                    }}
+                </Query>
             </div>
         );
     }
